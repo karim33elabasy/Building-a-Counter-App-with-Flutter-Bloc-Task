@@ -1,5 +1,5 @@
-import "package:create_different_blocs_task/controllers/counter_bloc/counter_bloc.dart";
-import "package:create_different_blocs_task/controllers/theme_bloc/theme_bloc.dart";
+import "package:create_different_blocs_task/controllers/counter_bloc/counter_cubit.dart";
+import "package:create_different_blocs_task/controllers/theme_bloc/theme_cubit.dart";
 import "package:create_different_blocs_task/controllers/theme_bloc/theme_states.dart";
 import "package:create_different_blocs_task/home_screen.dart";
 import "package:flutter/material.dart";
@@ -16,14 +16,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context)=> CounterBloc()),
-        BlocProvider(create: (context)=> ThemeBloc()),
+        BlocProvider(create: (context)=> CounterCubit()),
+        BlocProvider(create: (context)=> ThemeCubit()),
       ],
-      child: BlocBuilder<ThemeBloc,ThemeStates>(
+      child: BlocBuilder<ThemeCubit,ThemeStates>(
         builder: (context,state) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            themeMode: BlocProvider.of<ThemeBloc>(context).isDarkTheme? ThemeMode.dark : ThemeMode.light,
+            themeMode: context.read<ThemeCubit>().isDarkTheme? ThemeMode.dark : ThemeMode.light,
             darkTheme: ThemeData.dark(),
             theme: ThemeData.light(),
             home: const HomeScreen()

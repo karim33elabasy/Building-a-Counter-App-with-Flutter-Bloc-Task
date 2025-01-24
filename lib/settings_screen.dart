@@ -1,8 +1,6 @@
-import 'package:create_different_blocs_task/controllers/theme_bloc/theme_bloc.dart';
+import 'package:create_different_blocs_task/controllers/theme_bloc/theme_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'controllers/theme_bloc/theme_events.dart';
 import 'controllers/theme_bloc/theme_states.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -10,7 +8,7 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeBloc themeBloc = context.read<ThemeBloc>();
+    final ThemeCubit themeBloc = context.read<ThemeCubit>();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Settings",style: TextStyle(fontWeight: FontWeight.w500),),
@@ -20,13 +18,13 @@ class SettingsScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            BlocConsumer<ThemeBloc,ThemeStates>(
+            BlocConsumer<ThemeCubit,ThemeStates>(
               builder: (context,state) {
                 return SwitchListTile(
                   title:  const Text("Dark Mode", style: TextStyle(fontSize: 20),),
                   value: themeBloc.isDarkTheme,
                   onChanged: (switchValue){
-                    themeBloc.add(ThemeChange(isDark: switchValue));
+                    themeBloc.changeTheme(isDark: switchValue);
                   }
                 );
               },
